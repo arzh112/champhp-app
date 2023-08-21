@@ -1,0 +1,6 @@
+<?php
+
+$users = [];
+$mushrooms = [];
+
+?>
