@@ -2,32 +2,20 @@
 
 class User
 {
-    private string $id;
-    private string $firstName;
-    private string $lastName;
-    private string $email;
+    private int $id;
     private string $userName;
+    private string $email;
     private string $password;
 
-    public function __construct(string $firstName, string $lastName, string $email, string $userName, string $password)
+    public function __construct(string $userName, string $email, string $password)
     {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->userName = $userName;
         if(filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            throw new InvalidArgumentException(ErrorCode::getErrorMessage(ErrorCode::INVALID_EMAIL));
+            throw new InvalidArgumentException("L'adresse mail n'est pas valide");
         } else {
             $this->email = $email;
         }
-        $this->userName = $userName;
         $this->password = $password;
-    }
-
-    public function isValidEmail() : bool {
-        return filter_var($this->email, FILTER_VALIDATE_EMAIL);
-    }
-
-    public function addUserIntoData(): void {
-        
     }
 
     public function getId(): string
@@ -37,26 +25,6 @@ class User
     public function setId(string $id): self
     {
         $this->id = $id;
-        return $this;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
-        return $this;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
         return $this;
     }
 

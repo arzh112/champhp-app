@@ -1,17 +1,22 @@
 <?php
 require_once 'layout/header.php';
-require_once 'classes/ErrorCode.php';
 
 if (!empty($_POST)) {
     require_once 'classes/User.php';
     require_once 'classes/Utils.php';
-    require_once 'data/data.php';
+    require_once 'classes/ErrorCode.php';
+
+    [
+        'username' => $username,
+        'email' => $email,
+        'password' => $password
+    ] = $_POST;
+
     try {
-        if (empty($_POST['firstname']) || empty($_POST['lastname']) || empty($_POST['email']) || empty($_POST['username']) || empty($_POST['password'])) {
+        if (empty($username) || empty($email) || empty($password)) {
             throw new Exception(ErrorCode::getErrorMessage(ErrorCode::FIELDS_REQUIRED));
         }
-        $newUser = new User($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['username'], $_POST['password']);
-        $users[] = $newUser;
+        $newUser = new User($username, $email, $password);
         Utils::redirect('auth.php');
     } catch (InvalidArgumentException $ex) {
         $message = $ex->getMessage();
@@ -21,27 +26,26 @@ if (!empty($_POST)) {
 }
 ?>
 
-<h1>Inscription</h1>
-<p><?php if(isset($message)) { echo $message; } ?></p>
-<form method="POST">
-    <label for="firstname">Prénom :
-        <input type="text" name="firstname" />
-    </label>
-    <label for="lastname">Nom :
-        <input type="text" name="lastname" />
-    </label>
-    <label for="email">E-mail :
-        <input type="text" name="email" />
-    </label>
-    <label for="username">Nom d'utilisateur :
+
+<div class="container">
+    <h1>Inscription</h1>
+    <div class="error">
+        <?php if (isset($message)) {
+            echo $message;
+        } ?>
+    </div>
+    <form method="POST">
+        <label for="username">Nom d'utilisateur :</label>
         <input type="text" name="username" />
-    </label>
-    <label for="password">Mot de passe :
-        <input type="text" name="password" />
-    </label>
-    <button type="submit">Inscription</button>
-</form>
+
+        <label for="email">E-mail :</label>
+        <input type="text" name="email" />
+
+        <label for="password">Mot de passe :</label>
+        <input type="password" name="password" />
+        <button type="submit">Inscription</button>
+    </form>
+</div>
 
 <?php
-
 require_once 'layout/footer.php';

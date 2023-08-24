@@ -14,13 +14,13 @@ class ErrorCode
                 $result = "Veuillez vous connecter pour accéder à l'administration";
                 break;
             case self::INVALID_CREDENTIALS:
-                $result = "Les identifiants fournis n'ont pas permis de vous identifier";
+                $result = "Les identifiants saisis n'ont pas permis de vous identifier";
                 break;
             case self::FIELDS_REQUIRED:
                 $result = "Tous les champs du formulaire sont obligatoires";
                 break;
             case self::INVALID_EMAIL:
-                $result = "L'adresse email est invalide";
+                $result = "L'adresse mail n'est pas valide";
                 break;
             default:
                 $result = "Une erreur est survenue";
