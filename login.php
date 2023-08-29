@@ -9,19 +9,27 @@ if (isset($_GET['error'])) {
 ?>
 
 <div class="container">
-    <h1>Connexion</h1>
-    <div class="error">
-        <?php if (isset($message)) {
-            echo $message;
-        } ?>
+    <div class="row justify-content-center">
+        <h1>Connexion</h1>
+        <div class="error">
+            <?php if (isset($message)) {
+                echo $message;
+            } ?>
+        </div>
+        <form method="POST" action="auth.php">
+            <div class="form-group">
+                <label for="login">Email :</label>
+                <input type="email" class="form-control" name="log" />
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" class="form-control" name="pass" />
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Connexion</button>
+        </form>
     </div>
-    <form method="POST" action="auth.php">
-        <label for="login">Email :</label>
-        <input type="email" name="log" />
-        <label for="password">Mot de passe :</label>
-        <input type="password" name="pass" />
-        <button type="submit">Connexion</button>
-    </form>
+    
 </div>
 
 <?php

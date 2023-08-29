@@ -12,11 +12,14 @@ if (empty($_POST['log']) || empty($_POST['pass'])) {
     'pass' => $password
 ] = $_POST;
 
+if (filter_var($login, FILTER_VALIDATE_EMAIL) === false) {
+    Utils::redirect('login.php?error=' . ErrorCode::INVALID_EMAIL);
+}
 
-foreach($users as $user) {
-    if ($login === $user->getEmail() && $password === $user->getPassword()) {
+foreach($clients as $client) {
+    if ($login === $client->getEmail() && $password === $client->getPassword()) {
         session_start();
-        $_SESSION['login'] = 'user1@user.com';
+        $_SESSION['login'] = $client->getEmail();
         Utils::redirect('index.php');
     }
 }
@@ -24,7 +27,7 @@ foreach($users as $user) {
 foreach($admins as $admin)
 if ($login === $admin->getEmail() && $password === $admin->getPassword() ) {
     session_start();
-    $_SESSION['login'] = 'admin@admin.com';
+    $_SESSION['login'] = $admin->getEmail();
     Utils::redirect('administration.php');
 }
 

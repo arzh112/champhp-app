@@ -1,31 +1,31 @@
 <?php
 
-class User
+abstract class User
 {
     private int $id;
-    private string $userName;
-    private string $email;
-    private string $password;
+    protected string $email;
+    protected string $username;
+    protected string $password;
 
-    public function __construct(string $userName, string $email, string $password)
+    public function __construct(string $email, string $username, string $password)
     {
-        $this->userName = $userName;
+        if (empty($email) || empty($username) || empty($password)) {
+            throw new Exception("Tous les champs du formulaire sont obligatoires");
+        }
         if(filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             throw new InvalidArgumentException("L'adresse mail n'est pas valide");
         } else {
             $this->email = $email;
         }
+        $this->username = $username;
         $this->password = $password;
     }
+
+    public abstract function addToBdd() : void;
 
     public function getId(): string
     {
         return $this->id;
-    }
-    public function setId(string $id): self
-    {
-        $this->id = $id;
-        return $this;
     }
 
     public function getEmail(): string
@@ -38,13 +38,13 @@ class User
         return $this;
     }
 
-    public function getUserName(): string
+    public function getUsername(): string
     {
-        return $this->userName;
+        return $this->username;
     }
-    public function setUserName(string $userName): self
+    public function setUsername(string $username): self
     {
-        $this->userName = $userName;
+        $this->username = $username;
         return $this;
     }
 

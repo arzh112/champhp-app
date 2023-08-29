@@ -2,48 +2,45 @@
 require_once 'layout/header.php';
 
 if (!empty($_POST)) {
-    require_once 'classes/User.php';
+    require_once 'classes/Client.php';
     require_once 'classes/Utils.php';
     require_once 'classes/ErrorCode.php';
 
     [
-        'username' => $username,
         'email' => $email,
+        'username' => $username,
         'password' => $password
     ] = $_POST;
 
     try {
-        if (empty($username) || empty($email) || empty($password)) {
-            throw new Exception(ErrorCode::getErrorMessage(ErrorCode::FIELDS_REQUIRED));
-        }
-        $newUser = new User($username, $email, $password);
-        Utils::redirect('auth.php');
-    } catch (InvalidArgumentException $ex) {
-        $message = $ex->getMessage();
+        $newClient = new Client($email, $username, $password);
+
+        Utils::redirect('login.php');
     } catch (Exception $ex) {
         $message = $ex->getMessage();
     }
 }
 ?>
 
-
 <div class="container">
-    <h1>Inscription</h1>
+    <h1>Créer un compte</h1>
     <div class="error">
-        <?php if (isset($message)) {
-            echo $message;
-        } ?>
+        <?php if (isset($message)) { echo $message; } ?>
     </div>
     <form method="POST">
-        <label for="username">Nom d'utilisateur :</label>
-        <input type="text" name="username" />
-
-        <label for="email">E-mail :</label>
-        <input type="text" name="email" />
-
-        <label for="password">Mot de passe :</label>
-        <input type="password" name="password" />
-        <button type="submit">Inscription</button>
+        <div class="form-group">
+            <label for="email">E-mail :</label>
+            <input type="text" class="form-control" name="email" />
+        </div>
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" class="form-control" name="username" />
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe :</label>
+            <input type="password" class="form-control" name="password" />
+        </div>
+        <button type="submit" class="btn btn-primary">Inscription</button>
     </form>
 </div>
 
