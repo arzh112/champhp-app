@@ -1,5 +1,5 @@
 <?php
-require_once 'data/data.php';
+require_once 'data/data-users.php';
 require_once 'classes/ErrorCode.php';
 require_once 'classes/Utils.php';
 

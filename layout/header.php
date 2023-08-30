@@ -2,7 +2,8 @@
 session_start();
 require_once 'classes/Client.php';
 require_once 'classes/Admin.php';
-require_once 'data/data.php';
+require_once 'data/data-mushrooms.php';
+require_once 'data/data-users.php';
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +56,7 @@ require_once 'data/data.php';
                         <a class="nav-link" href="login.php">Connexion</a>
                     </button>
                     <button type="button" class="btn">
-                        <a class="nav-link" href="registration.php">Inscription</a>
+                        <a class="nav-link" href="register.php">Inscription</a>
                     </button>
                 <?php } ?>
                 </div> 

@@ -2,30 +2,27 @@
 
 abstract class User
 {
-    private int $id;
+    protected int $id;
     protected string $email;
     protected string $username;
     protected string $password;
 
-    public function __construct(string $email, string $username, string $password)
+    public function __construct(int $id, string $email, string $username, string $password)
     {
-        if (empty($email) || empty($username) || empty($password)) {
-            throw new Exception("Tous les champs du formulaire sont obligatoires");
-        }
-        if(filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            throw new InvalidArgumentException("L'adresse mail n'est pas valide");
-        } else {
-            $this->email = $email;
-        }
+        $this->id = $id;
+        $this->email = $email;
         $this->username = $username;
         $this->password = $password;
     }
 
-    public abstract function addToBdd() : void;
-
     public function getId(): string
     {
         return $this->id;
+    }
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getEmail(): string
