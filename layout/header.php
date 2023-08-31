@@ -1,9 +1,18 @@
 <?php
 session_start();
-require_once 'classes/Client.php';
 require_once 'classes/Admin.php';
-require_once 'data/data-mushrooms.php';
-require_once 'data/data-users.php';
+require_once 'classes/User.php';
+require_once 'classes/Client.php';
+require_once 'classes/ErrorCode.php';
+require_once 'functions/db.php';
+
+try {
+    $admins = getDbAdmins();
+    $users = getDbUsers();
+} catch (PDOException) {
+    $message = ErrorCode::getErrorMessage(ErrorCode::FAILD_DB_CONNECT);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -25,19 +34,18 @@ require_once 'data/data-users.php';
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Accueil</a>
                 </li>
-                <?php foreach ($admins as $admin) { ?>
-                    <?php if (isset($_SESSION['login']) && $_SESSION['login'] === $admin->getEmail()) { ?>
-                        <li class="nav-item">
-                            <a class="nav-link" href="users-admin.php">Gestion des utilisateurs</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="mushrooms-admin.php">Gestions des champignons</a>
-                        </li>
+                <?php if (isset($admins)) { ?>
+                    <?php foreach ($admins as $admin) { ?>
+                        <?php if (isset($_SESSION['login']) && $_SESSION['login'] === $admin->getEmail()) { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="administration.php">Gestion des utilisateurs</a>
+                            </li>
+                        <?php } ?>
                     <?php } ?>
                 <?php } ?>
-                </ul>
-                
-                <div>
+            </ul>
+
+            <div>
                 <?php if (isset($_SESSION['login'])) { ?>
                     <?php foreach ($users as $u) { ?>
                         <?php if ($u->getEmail() === $_SESSION['login']) { ?>
@@ -59,6 +67,12 @@ require_once 'data/data-users.php';
                         <a class="nav-link" href="register.php">Inscription</a>
                     </button>
                 <?php } ?>
-                </div> 
+            </div>
         </div>
     </nav>
+
+    <div class="text-danger">
+        <?php if (isset($message)) {
+            echo $message;
+        } ?>
+    </div>

@@ -6,6 +6,7 @@ class ErrorCode
     public const INVALID_CREDENTIALS = 2;
     public const FIELDS_REQUIRED = 3;
     public const INVALID_EMAIL = 4;
+    public const FAILD_DB_CONNECT = 5;
 
     public static function getErrorMessage(int $errorCode): string
     {
@@ -22,6 +23,8 @@ class ErrorCode
             case self::INVALID_EMAIL:
                 $result = "L'adresse mail n'est pas valide";
                 break;
+            case self::FAILD_DB_CONNECT:
+                $result = "La connexion à la base de donnée à échouée";
             default:
                 $result = "Une erreur est survenue";
         }

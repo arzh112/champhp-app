@@ -31,7 +31,7 @@ if (!empty($_POST)) {
         $stmt->execute([
             ':email' => $email,
             ':username' => $username,
-            ':passwordHash' => $password
+            ':passwordHash' => password_hash($password, PASSWORD_DEFAULT)
         ]);
     } catch(PDOException) {
         echo "erreur lors de la requête";
