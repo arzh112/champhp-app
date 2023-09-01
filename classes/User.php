@@ -6,13 +6,15 @@ abstract class User
     protected string $email;
     protected string $username;
     protected string $password;
+    protected bool $adminStatus;
 
-    public function __construct(int $id, string $email, string $username, string $password)
+    public function __construct(int $id, string $email, string $username, string $password, bool $adminStatus)
     {
         $this->id = $id;
         $this->email = $email;
         $this->username = $username;
         $this->password = $password;
+        $this->adminStatus = $adminStatus;
     }
 
     public function getId(): string
@@ -54,4 +56,7 @@ abstract class User
         $this->password = $password;
         return $this;
     }
+
+    public function getAdminStatus(){ return $this->adminStatus; }
+    public function setAdminStatus($adminStatus): self { $this->adminStatus = $adminStatus; return $this; }
 }

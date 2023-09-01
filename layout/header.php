@@ -12,7 +12,6 @@ try {
 } catch (PDOException) {
     $message = ErrorCode::getErrorMessage(ErrorCode::FAILD_DB_CONNECT);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -23,14 +22,14 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <title><?php echo isset($title) ? $title : "Champhp"; ?></title>
+    <title><?php echo isset($title) ? $title : "ChamPHP"; ?></title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-end">
-        <a class="navbar-brand" href="index.php">Champhp</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100 d-flex justify-content-between">
+        <a class="navbar-brand mx-5 my-3" href="index.php">ChamPHP</a>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav w-100 justify-content-center">
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Accueil</a>
                 </li>
@@ -45,25 +44,24 @@ try {
                 <?php } ?>
             </ul>
 
-            <div>
+            <div class="d-flex mx-5">
                 <?php if (isset($_SESSION['login'])) { ?>
                     <?php foreach ($users as $u) { ?>
                         <?php if ($u->getEmail() === $_SESSION['login']) { ?>
                             <?php $uName = $u->getUsername(); ?>
                         <?php } ?>
                     <?php } ?>
-                    <button type="button" class="btn">
+                    <button type="button" class="btn btn-outline-success mx-2">
                         <a class="nav-link" href="count.php"><?php echo $uName ?></a>
-                    </button>
-                    <button type="button" class="btn">
+                    <button type="button" class="btn btn-success mx-2">
                         <a class="nav-link" href="logout.php">Déconnexion</a>
                     </button>
 
                 <?php } else { ?>
-                    <button type="button" class="btn">
+                    <button type="button" class="btn btn-success mx-2">
                         <a class="nav-link" href="login.php">Connexion</a>
                     </button>
-                    <button type="button" class="btn">
+                    <button type="button" class="btn btn-success mx-2">
                         <a class="nav-link" href="register.php">Inscription</a>
                     </button>
                 <?php } ?>

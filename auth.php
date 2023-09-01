@@ -1,6 +1,8 @@
 <?php
 require_once 'classes/ErrorCode.php';
 require_once 'classes/Utils.php';
+require_once 'classes/Admin.php';
+require_once 'classes/Client.php';
 require_once 'functions/db.php';
 
 try {
@@ -26,22 +28,32 @@ if (filter_var($login, FILTER_VALIDATE_EMAIL) === false) {
     Utils::redirect('login.php?error=' . ErrorCode::INVALID_EMAIL);
 }
 
+
 foreach($clients as $client) {
+    var_dump($password);
+    var_dump($client->getPassword());
+    var_dump(password_verify($password, $client->getPassword()));
     if ($login === $client->getEmail() && password_verify($password, $client->getPassword())) {
         session_start();
+        $_SESSION['id'] = $client->getId();
         $_SESSION['login'] = $client->getEmail();
         Utils::redirect('index.php');
     }
 }
 
-foreach($admins as $admin)
-if ($login === $admin->getEmail() && password_verify($password, $admin->getPassword())) {
-    session_start();
-    $_SESSION['login'] = $admin->getEmail();
-    Utils::redirect('administration.php');
+foreach($admins as $admin) {
+    var_dump($password);
+    var_dump($admin->getPassword());
+    var_dump(password_verify($password, $admin->getPassword()));
+    if ($login === $admin->getEmail() && password_verify($password, $admin->getPassword())) {
+        session_start();
+        $_SESSION['id'] = $admin->getId();
+        $_SESSION['login'] = $admin->getEmail();
+        Utils::redirect('administration.php');
+    }
 }
 
-Utils::redirect('login.php?error=' . ErrorCode::INVALID_CREDENTIALS);
+//Utils::redirect('login.php?error=' . ErrorCode::INVALID_CREDENTIALS);
 
 
 

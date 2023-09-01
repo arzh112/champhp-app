@@ -2,7 +2,6 @@
 require_once 'layout/header.php';
 
 if (isset($_GET['error'])) {
-    require_once 'classes/ErrorCode.php';
     $message = ErrorCode::getErrorMessage(intval($_GET['error']));
 }
 

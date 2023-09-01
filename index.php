@@ -5,13 +5,14 @@ require_once 'classes/Mushroom.php';
 try {
     $mushrooms = getDbMushrooms();
 } catch (PDOException) {
-    $message = ErrorCode::getErrorMessage(ErrorCode::FAILD_DB_CONNECT);
+    echo ErrorCode::getErrorMessage(ErrorCode::FAILD_DB_CONNECT);
+    exit;
 }
 ?>
 
 
-<div class="container">
-    <div class="row">
+<div class="container my-5">
+    <div class="row justify-content-center">
         <?php if (isset($mushrooms)) { 
             foreach ($mushrooms as $mushroom) {
                 require 'layout/card-template.php';
@@ -20,8 +21,6 @@ try {
 
     </div>
 </div>
-
-
 
 <?php
 require_once 'layout/footer.php';

@@ -34,48 +34,51 @@ function getDbUsers(): array {
     $pdo = getDbConnection();
     $stmt = $pdo->query("SELECT * FROM users");
     $usersArr = $stmt->fetchAll();
+    $users = []; //return an empty array if db is empty
     foreach($usersArr as $u) {
-        if($u['admin'] === 1) {
-            $users[] = new Admin($u['id'], $u['email'], $u['username'], $u['password']);
+        if($u['admin_status'] === 1) {
+            $users[] = new Admin($u['id'], $u['email'], $u['username'], $u['password_hash'], $u['admin_status']);
         }
-        if($u['admin'] === 0) {
-            $users[] = new Client($u['id'], $u['email'], $u['username'], $u['password']);
+        if($u['admin_status'] === 0) {
+            $users[] = new Client($u['id'], $u['email'], $u['username'], $u['password_hash'], $u['admin_status']);
         }
     } 
     return $users;
 }
 
 /**
- * Return an array of object with all admins in data base
+ * Return an array of object with only the admins in data base
  *
- * @return array -- Array of object Admin
+ * @return array -- Array of objects Admin
  * @throws PDOException
  */
 function getDbAdmins(): array {
     $pdo = getDbConnection();
     $stmt = $pdo->query("SELECT * FROM users");
     $usersArr = $stmt->fetchAll();
+    $admins = []; //return an empty array if db is empty
     foreach($usersArr as $u) {
-        if($u['admin'] === 1) {
-            $admins[] = new Admin($u['id'], $u['email'], $u['username'], $u['password']);
+        if($u['admin_status'] === 1) {
+            $admins[] = new Admin($u['id'], $u['email'], $u['username'], $u['password_hash'], $u['admin_status']);
         }
     }
     return $admins;
 }
 
 /**
- * Return an array of object with all clients in data base
+ * Return an array of object with only the clients in data base
  *
- * @return array -- Array of object Client
+ * @return array -- Array of objects Client
  * @throws PDOException
  */
 function getDbClients(): array {
     $pdo = getDbConnection();
     $stmt = $pdo->query("SELECT * FROM users");
     $usersArr = $stmt->fetchAll();
+    $clients = []; //return an empty array if db is empty
     foreach($usersArr as $u) {
-        if($u['admin'] === 1) {
-            $clients[] = new Admin($u['id'], $u['email'], $u['username'], $u['password']);
+        if($u['admin_status'] === 0) {
+            $clients[] = new Client($u['id'], $u['email'], $u['username'], $u['password_hash'], $u['admin_status']);
         }
     }
     return $clients;
@@ -84,14 +87,14 @@ function getDbClients(): array {
 /**
  * Return an array of object with all mushrooms in data base
  *
- * @return array -- Array of object Mushroom
+ * @return array -- Array of objects Mushroom
  * @throws PDOException
  */
 function getDbMushrooms(): array {
     $pdo = getDbConnection();
     $stmt = $pdo->query("SELECT * FROM mushrooms");
     $mushroomsArr = $stmt->fetchAll();
-
+    $mushrooms = [];
     foreach($mushroomsArr as $m) {
         $mushrooms[] = new Mushroom($m['id'], $m['name'], $m['latin_name'], $m['genus'], $m['habitat'], $m['category'], $m['description'], $m['main_picture']);
     }

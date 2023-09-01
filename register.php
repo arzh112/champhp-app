@@ -1,21 +1,23 @@
 <?php
 require_once 'layout/header.php';
 require_once 'classes/Utils.php';
-require_once 'classes/ErrorCode.php';
-require_once 'functions/db.php';
 
 if (isset($_GET['error'])) {
-    require_once 'classes/ErrorCode.php';
     $message = ErrorCode::getErrorMessage(intval($_GET['error']));
 }
 
 if (!empty($_POST)) {
-    require_once 'classes/Utils.php';
+
     [
         'email' => $email,
         'username' => $username,
-        'password' => $password
+        'password' => $password,
+        'password-confirm' => $confirmPassword
     ] = $_POST;
+
+    if($password != $confirmPassword) {
+        Utils::redirect('register.php?error=' . ErrorCode::FAILD_CONFIRM_PASS);
+    }
 
     if (empty($email) || empty($username) || empty($password)) {
         Utils::redirect('register.php?error=' . ErrorCode::FIELDS_REQUIRED);
@@ -27,7 +29,7 @@ if (!empty($_POST)) {
 
     try {
         $pdo = getDbConnection();
-        $stmt = $pdo->prepare("INSERT INTO users (email, username, passwordHash) VALUES (:email, :username, :passwordHash)");
+        $stmt = $pdo->prepare("INSERT INTO users (email, username, password_hash, admin_status) VALUES (:email, :username, :passwordHash, false)");
         $stmt->execute([
             ':email' => $email,
             ':username' => $username,
@@ -38,8 +40,6 @@ if (!empty($_POST)) {
         exit;
     }
 }
-
-
 ?>
 
 <div class="container">
@@ -59,6 +59,10 @@ if (!empty($_POST)) {
         <div class="form-group">
             <label for="password">Mot de passe :</label>
             <input type="password" class="form-control" name="password" />
+        </div>
+        <div class="form-group">
+            <label for="password-confirm">Confirmation du mot de passe :</label>
+            <input type="password" class="form-control" name="password-confirm" />
         </div>
         <button type="submit" class="btn btn-primary">Inscription</button>
     </form>
