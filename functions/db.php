@@ -100,3 +100,33 @@ function getDbMushrooms(): array {
     }
     return $mushrooms;
 }
+
+
+/**
+ * Get an array of all picture related to a mushroom
+ *
+ * @param integer - mushrooms id
+ * @return array
+ * @throws PDOException
+ */
+function getMushroomsPictures(int $mushroomsId): array {
+    $pdo = getDbConnection();
+    $stmt = $pdo->query("SELECT * FROM pictures WHERE mushrooms_id=$mushroomsId");
+    $mushPicturesArr = $stmt->fetchAll();
+    $mushPictures = [];
+    foreach($mushPicturesArr as $p) {
+        $mushPictures[] = new Picture($p['id'], $p['title'], $p['picture_path'], $p['upload_date'], $p['mushrooms_id'], $p['users_id']);
+    }
+    return $mushPictures;
+}
+ /**
+  * Get an array of all users who uploaded a picture
+  *
+  * @return array - [['username' => value, 'picturesId' => value], ...]
+  * @throws PDOException
+  */
+function getPicturesUsername(): array {
+    $pdo = getDbConnection();
+    $stmt = $pdo->query("SELECT username, pictures.id AS picturesId FROM users INNER JOIN pictures ON users.id = users_id");  
+    return $picturesUsername = $stmt->fetchAll();
+}

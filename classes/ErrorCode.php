@@ -27,10 +27,13 @@ class ErrorCode
                 break;
             case self::FAILD_DB_CONNECT:
                 $result = "La connexion à la base de donnée à échouée";
+                break;
             case self::FAILD_CONFIRM_PASS:
                 $result = "La confirmation du mot de passe a échoué";
+                break;
             case self::LOGIN_REQUIRED:
                 $result = "Veuillez vous connecter";
+                break;
             default:
                 $result = "Une erreur est survenue";
         }

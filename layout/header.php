@@ -37,7 +37,7 @@ try {
                     <?php foreach ($admins as $admin) { ?>
                         <?php if (isset($_SESSION['login']) && $_SESSION['login'] === $admin->getEmail()) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="administration.php">Gestion des utilisateurs</a>
+                                <a class="nav-link" href="administration.php">Administration</a>
                             </li>
                         <?php } ?>
                     <?php } ?>

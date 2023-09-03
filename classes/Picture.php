@@ -3,14 +3,16 @@
 class Picture
 {
     private int $id;
+    private string $title;
     private string $path;
     private string $date;
     private int $mushroomsId;
     private int $usersId;
 
-    public function __construct(int $id, string $path, string $date, int $mushroomsId, int $usersId)
+    public function __construct(int $id, string $title, string $path, string $date, int $mushroomsId, int $usersId)
     {
         $this->id = $id;
+        $this->title = $title;
         $this->path = $path;
         $this->date = $date;
         $this->mushroomsId = $mushroomsId;

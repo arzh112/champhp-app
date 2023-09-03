@@ -53,7 +53,7 @@ foreach($admins as $admin) {
     }
 }
 
-//Utils::redirect('login.php?error=' . ErrorCode::INVALID_CREDENTIALS);
+Utils::redirect('login.php?error=' . ErrorCode::INVALID_CREDENTIALS);
 
 
 

@@ -48,23 +48,23 @@ if (!empty($_POST)) {
         <?php if (isset($message)) { echo $message; } ?>
     </div>
     <form method="POST">
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="email">E-mail :</label>
             <input type="text" class="form-control" name="email" />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="username">Nom d'utilisateur :</label>
             <input type="text" class="form-control" name="username" />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="password">Mot de passe :</label>
             <input type="password" class="form-control" name="password" />
         </div>
-        <div class="form-group">
+        <div class="form-group my-2">
             <label for="password-confirm">Confirmation du mot de passe :</label>
             <input type="password" class="form-control" name="password-confirm" />
         </div>
-        <button type="submit" class="btn btn-primary">Inscription</button>
+        <button type="submit" class="btn btn-success my-2">Inscription</button>
     </form>
 </div>
 
