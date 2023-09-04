@@ -1,6 +1,8 @@
 <?php
+require_once 'classes/IgetData.php';
+require_once 'classes/IgetDataById.php';
 
-abstract class User
+abstract class User implements IgetData, IgetDataById
 {
     protected int $id;
     protected string $email;

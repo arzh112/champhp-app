@@ -7,8 +7,10 @@ require_once 'classes/ErrorCode.php';
 require_once 'functions/db.php';
 
 try {
-    $admins = getDbAdmins();
-    $users = getDbUsers();
+    $pdo = getDbConnection();
+    $admins = Admin::getData($pdo);
+    $clients = Client::getData($pdo);
+    $users = [...$admins, ...$clients];
 } catch (PDOException) {
     $message = ErrorCode::getErrorMessage(ErrorCode::FAILD_DB_CONNECT);
 }
@@ -48,11 +50,11 @@ try {
                 <?php if (isset($_SESSION['login'])) { ?>
                     <?php foreach ($users as $u) { ?>
                         <?php if ($u->getEmail() === $_SESSION['login']) { ?>
-                            <?php $uName = $u->getUsername(); ?>
+                            <?php $username = $u->getUsername(); ?>
                         <?php } ?>
                     <?php } ?>
                     <button type="button" class="btn btn-outline-success mx-2">
-                        <a class="nav-link" href="count.php"><?php echo $uName ?></a>
+                        <a class="nav-link" href="count.php"><?php echo $username ?></a>
                     <button type="button" class="btn btn-success mx-2">
                         <a class="nav-link" href="logout.php">Déconnexion</a>
                     </button>

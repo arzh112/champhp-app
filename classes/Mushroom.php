@@ -1,6 +1,7 @@
 <?php
 
-class Mushroom
+
+class Mushroom implements IgetData, IgetDataById
 {
     private int $id;
     private string $name;
@@ -21,6 +22,31 @@ class Mushroom
         $this->category = $category;
         $this->description = $description;
         $this->mainPicture = $mainPicture;
+    }
+
+    public static function getData(PDO $pdo): array
+    {
+        $stmt = $pdo->query("SELECT * FROM mushrooms");
+        $mushroomsArr = $stmt->fetchAll();
+        $mushrooms = [];
+        foreach ($mushroomsArr as $m) {
+            $mushrooms[] = new self($m['id'], $m['name'], $m['latin_name'], $m['genus'], $m['habitat'], $m['category'], $m['description'], $m['main_picture']);
+        }
+        return $mushrooms;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param PDO $pdo
+     * @param integer $id
+     * @return object
+     */
+    public static function getDataById(PDO $pdo, int $id): object
+    {
+        $stmt = $pdo->query("SELECT * FROM mushrooms WHERE id=$id");
+        $m = $stmt->fetch();
+        return new self($m['id'], $m['name'], $m['latin_name'], $m['genus'], $m['habitat'], $m['category'], $m['description'], $m['main_picture']);
     }
 
     public function getId(): int

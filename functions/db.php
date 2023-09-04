@@ -30,8 +30,7 @@ function getDbConnection(): PDO
  * @return array -- Array of object Admin and Client
  * @throws PDOException
  */
-function getDbUsers(): array {
-    $pdo = getDbConnection();
+function getDbUsers(PDO $pdo): array {
     $stmt = $pdo->query("SELECT * FROM users");
     $usersArr = $stmt->fetchAll();
     $users = []; //return an empty array if db is empty
@@ -119,14 +118,15 @@ function getMushroomsPictures(int $mushroomsId): array {
     }
     return $mushPictures;
 }
- /**
-  * Get an array of all users who uploaded a picture
-  *
-  * @return array - [['username' => value, 'picturesId' => value], ...]
-  * @throws PDOException
-  */
-function getPicturesUsername(): array {
+ 
+  /**
+   * Return an array whith the username related to a picture
+   *
+   * @param integer - pictures id
+   * @return array - [['username' => value, 'picturesId' => value]]
+   */
+function getPicturesUsername(int $picturesId): array {
     $pdo = getDbConnection();
-    $stmt = $pdo->query("SELECT username, pictures.id AS picturesId FROM users INNER JOIN pictures ON users.id = users_id");  
-    return $picturesUsername = $stmt->fetchAll();
+    $stmt = $pdo->query("SELECT username, pictures.id AS picturesId FROM users INNER JOIN pictures ON users.id = users_id WHERE pictures.id=$picturesId");  
+    return $stmt->fetchAll();
 }
