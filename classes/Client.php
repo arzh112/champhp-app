@@ -22,9 +22,33 @@ class Client extends User
 
     public static function getDataById(PDO $pdo, int $id): object
     {
-        $stmt = $pdo->query("SELECT * FROM users WHERE id=$id");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE id=?");
+        $stmt->execute([$id]);
         $u = $stmt->fetch();
         return new self($u['id'], $u['email'], $u['username'], $u['password_hash'], $u['admin_status']);
-    } 
-
+    }
+    
+    /**
+     * Static method for add a new user in data base
+     *
+     * @param PDO $pdo - Connection instance
+     * @param string $email 
+     * @param string $username
+     * @param string $password
+     * @return void
+     * @throws Exception - if invalid email format
+     */
+    public static function addToDB(PDO $pdo, string $email, string $username, string $password): void
+    {
+        if(filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            throw new Exception("Le format de l'email est incorrect");
+        }
+        $stmt = $pdo->prepare("INSERT INTO users (email, username, password_hash, admin_status) VALUES (:email, :username, :passwordHash, false)");
+        $stmt->execute([
+            ':email' => $email,
+            ':username' => $username,
+            ':passwordHash' => password_hash($password, PASSWORD_DEFAULT)
+        ]);
+    }
+    
 }

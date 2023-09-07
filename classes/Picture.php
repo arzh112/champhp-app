@@ -32,14 +32,16 @@ class Picture implements IgetData, IgetDataById
 
     public static function getDataById(PDO $pdo, int $id): object
     {
-        $stmt = $pdo->query("SELECT * FROM pictures WHERE id=$id");
+        $stmt = $pdo->prepare("SELECT * FROM pictures WHERE id=?");
+        $stmt->execute([$id]);
         $p = $stmt->fetch();
         return new self($p['id'], $p['title'], $p['picture_path'], $p['upload_date'], $p['mushrooms_id'], $p['users_id']);
     }
 
     public static function getPicturesByMushroomsId(PDO $pdo, int $mushroomsId): array
     {
-        $stmt = $pdo->query("SELECT * FROM pictures WHERE mushrooms_id=$mushroomsId");
+        $stmt = $pdo->prepare("SELECT * FROM pictures WHERE mushrooms_id=?");
+        $stmt->execute([$mushroomsId]);
         $picturesArr = $stmt->fetchAll();
         $pictures = [];
         foreach ($picturesArr as $p) {
@@ -48,13 +50,33 @@ class Picture implements IgetData, IgetDataById
         return $pictures;
     }
 
-    function getPicturesUsername(PDO $pdo): string
+    public static function getUsersPictures(PDO $pdo, int $usersId): array 
+    {
+        $stmt = $pdo->prepare("SELECT * FROM pictures WHERE users_id=?");
+        $stmt->execute([$usersId]);
+        $picturesArr = $stmt->fetchAll();
+        $pictures = [];
+        foreach ($picturesArr as $p) {
+            $pictures[] = new self($p['id'], $p['title'], $p['picture_path'], $p['upload_date'], $p['mushrooms_id'], $p['users_id']);
+        }
+        return $pictures;
+    }
+
+    public static function deletePicture(PDO $pdo, int $picturesId): void
+    {
+        $delete = $pdo->prepare("DELETE FROM pictures WHERE id=?");
+        $delete->execute([$picturesId]);
+    }
+
+    public function getPicturesUsername(PDO $pdo): string
     {
         $picturesId = $this->id;
         $stmt = $pdo->query("SELECT username FROM users INNER JOIN pictures ON users.id = users_id WHERE pictures.id=$picturesId");
         $usernameArr = $stmt->fetch();
         return $usernameArr['username'];
     }
+
+
 
     public function getId(): int
     {

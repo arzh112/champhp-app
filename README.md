@@ -66,7 +66,7 @@ Liste des colonnes:
 
 ## Les classes
 
-J'ai définis cinq classe liées à la base de donnée qui reprennent en propriété les colonne de la base de donnée:
+J'ai définis cinq classes qui reprennent en propriété les colonnes de la base de donnée:
 * les classes Admin et Client sont des classes enfants de la classe abstraite User, 
 * la classe Mushroom 
 * la classe Picture

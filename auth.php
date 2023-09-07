@@ -6,8 +6,9 @@ require_once 'classes/Client.php';
 require_once 'functions/db.php';
 
 try {
-    $clients = getDbClients();
-    $admins = getDbAdmins();
+    $pdo = getDbConnection();
+    $clients = Client::getData($pdo);
+    $admins = Admin::getData($pdo);
 } catch(PDOException) {
     Utils::redirect('register.php?error=' . ErrorCode::FAILD_DB_CONNECT);
 }
@@ -37,6 +38,7 @@ foreach($clients as $client) {
         session_start();
         $_SESSION['id'] = $client->getId();
         $_SESSION['login'] = $client->getEmail();
+        $_SESSION['admin_status'] = $client->getAdminStatus();
         Utils::redirect('index.php');
     }
 }
@@ -49,6 +51,7 @@ foreach($admins as $admin) {
         session_start();
         $_SESSION['id'] = $admin->getId();
         $_SESSION['login'] = $admin->getEmail();
+        $_SESSION['admin_status'] = $admin->getAdminStatus();
         Utils::redirect('administration.php');
     }
 }

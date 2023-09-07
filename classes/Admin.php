@@ -25,7 +25,8 @@ class Admin extends User
 
     public static function getDataById(PDO $pdo, int $id): object
     {
-        $stmt = $pdo->query("SELECT * FROM users WHERE id=$id");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE id=?");
+        $stmt->execute([$id]);
         $u = $stmt->fetch();
         return new self($u['id'], $u['email'], $u['username'], $u['password_hash'], $u['admin_status']);
     } 

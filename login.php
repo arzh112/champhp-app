@@ -10,10 +10,8 @@ if (isset($_GET['error'])) {
 <div class="container">
     <div class="row justify-content-center">
         <h1>Connexion</h1>
-        <div class="error">
-            <?php if (isset($message)) {
-                echo $message;
-            } ?>
+        <div class="text-danger">
+            <?php if (isset($message)) { echo $message; } ?>
         </div>
         <form method="POST" action="auth.php">
             <div class="form-group my-2">

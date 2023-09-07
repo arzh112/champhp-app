@@ -59,6 +59,13 @@ abstract class User implements IgetData, IgetDataById
         return $this;
     }
 
-    public function getAdminStatus(){ return $this->adminStatus; }
-    public function setAdminStatus($adminStatus): self { $this->adminStatus = $adminStatus; return $this; }
+    public function getAdminStatus()
+    {
+        return $this->adminStatus;
+    }
+    public function setAdminStatus($adminStatus): self
+    {
+        $this->adminStatus = $adminStatus;
+        return $this;
+    }
 }

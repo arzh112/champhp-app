@@ -54,7 +54,7 @@ try {
                         <?php } ?>
                     <?php } ?>
                     <button type="button" class="btn btn-outline-success mx-2">
-                        <a class="nav-link" href="count.php"><?php echo $username ?></a>
+                        <a class="nav-link" href="account.php"><?php echo $username ?></a>
                     <button type="button" class="btn btn-success mx-2">
                         <a class="nav-link" href="logout.php">Déconnexion</a>
                     </button>

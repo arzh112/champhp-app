@@ -44,7 +44,8 @@ class Mushroom implements IgetData, IgetDataById
      */
     public static function getDataById(PDO $pdo, int $id): object
     {
-        $stmt = $pdo->query("SELECT * FROM mushrooms WHERE id=$id");
+        $stmt = $pdo->prepare("SELECT * FROM mushrooms WHERE id=?");
+        $stmt->execute([$id]);
         $m = $stmt->fetch();
         return new self($m['id'], $m['name'], $m['latin_name'], $m['genus'], $m['habitat'], $m['category'], $m['description'], $m['main_picture']);
     }

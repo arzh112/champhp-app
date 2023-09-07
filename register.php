@@ -23,18 +23,9 @@ if (!empty($_POST)) {
         Utils::redirect('register.php?error=' . ErrorCode::FIELDS_REQUIRED);
     }
 
-    if(filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-        Utils::redirect('register.php?error=' . ErrorCode::INVALID_EMAIL);
-    }
-
     try {
         $pdo = getDbConnection();
-        $stmt = $pdo->prepare("INSERT INTO users (email, username, password_hash, admin_status) VALUES (:email, :username, :passwordHash, false)");
-        $stmt->execute([
-            ':email' => $email,
-            ':username' => $username,
-            ':passwordHash' => password_hash($password, PASSWORD_DEFAULT)
-        ]);
+        
     } catch(PDOException) {
         echo "erreur lors de la requête";
         exit;
