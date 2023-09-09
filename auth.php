@@ -52,7 +52,7 @@ foreach($admins as $admin) {
         $_SESSION['id'] = $admin->getId();
         $_SESSION['login'] = $admin->getEmail();
         $_SESSION['admin_status'] = $admin->getAdminStatus();
-        Utils::redirect('administration.php');
+        Utils::redirect('index.php');
     }
 }
 

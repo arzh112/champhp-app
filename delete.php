@@ -15,6 +15,6 @@ try{
         Utils::redirect('account.php?message=La suppression est éffectuée');
     }
 } catch (PDOException) {
-    echo "Erruer lors de la requête";
+    echo "Erreur lors de la requête";
     exit;
 }

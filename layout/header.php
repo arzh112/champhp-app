@@ -39,7 +39,10 @@ try {
                     <?php foreach ($admins as $admin) { ?>
                         <?php if (isset($_SESSION['login']) && $_SESSION['login'] === $admin->getEmail()) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="administration.php">Administration</a>
+                                <a class="nav-link" href="admin-photo.php">Photos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="admin-mushroom.php">Champignons</a>
                             </li>
                         <?php } ?>
                     <?php } ?>

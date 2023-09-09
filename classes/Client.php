@@ -36,12 +36,12 @@ class Client extends User
      * @param string $username
      * @param string $password
      * @return void
-     * @throws Exception - if invalid email format
+     * @throws InvalidEmailException - if invalid email format
      */
     public static function addToDB(PDO $pdo, string $email, string $username, string $password): void
     {
         if(filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-            throw new Exception("Le format de l'email est incorrect");
+            throw new InvalidEmailException("Le format de l'email est incorrect");
         }
         $stmt = $pdo->prepare("INSERT INTO users (email, username, password_hash, admin_status) VALUES (:email, :username, :passwordHash, false)");
         $stmt->execute([

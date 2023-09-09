@@ -27,7 +27,8 @@ Chaque photo est reliée à un champignon spécifique présenté sur l'applicati
 * Page de connexion
 
 * Page de compte utilisateur
-    * Bibliothèque personnel de l'utilisateurs avec toute les photos téléchargées
+    * Bibliothèque personnel de l'utilisateurs avec toutes les photos téléchargées.
+    * L'utilisateur peu supprimer les photos qu'il a posté.
 
 ## MCD
 
@@ -49,6 +50,7 @@ Liste des colonnes :
 * id
 * title
 * picture_path
+* type
 * size
 * upload_date (de type timestamp et une valeur par défaut CURRENT_TIMESTAMP et extra en DEFAULT_GENERATED)
 * musrooms_id (clé étrangère)

@@ -20,8 +20,7 @@
                 <div class="form-group">
                     <label for="newPicture" class="my-2">Ajoûter une photo :</label>
                     <input type="file" name="newPicture" class="form-control my-2" />
-                    <input type="hidden" name="mushroomsId" value="<?php echo $mushroom->getId(); ?>">
-                    <button type="submit" class="btn btn-success my-2">Envoyer</button>
+                    <button type="submit" class="btn btn-success my-2" name="mushroomsId" value="<?php echo $mushroom->getId(); ?>">Envoyer</button>
                 </div>
             </form>
         </div>

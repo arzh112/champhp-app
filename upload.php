@@ -2,6 +2,9 @@
 session_start();
 require_once 'classes/Utils.php';
 require_once 'classes/ErrorCode.php';
+require_once 'classes/IgetData.php';
+require_once 'classes/IgetDataById.php';
+require_once 'classes/Picture.php';
 require_once 'functions/db.php';
 
 if (empty($_SESSION)) {
@@ -26,28 +29,23 @@ $usersId = intval($_SESSION['id']);
 
 try {
     $pdo = getDbConnection();
-    $stmt = $pdo->prepare("INSERT INTO pictures (title, picture_path, size, mushrooms_id, users_id) VALUES (?, ?, ?, ?, ?)");
-    $stmt->execute([
-        $name,
-        $path,
-        $size,
-        $mushroomsId,
-        $usersId
-    ]);
+    Picture::addToDB($pdo, $name, $path, $type, $size, $mushroomsId, $usersId);
+    if (isset($_FILES['newPicture'])) {
+        $file = $_FILES['newPicture'];
+        $destination = "assets/uploads/" . $path;
+        if(move_uploaded_file($file['tmp_name'], $destination) === false) {
+            throw new Exception("L'ajout de la photo au dossier de destination à échoué");
+        }
+        Utils::redirect('mushrooms-details.php?id=' . $_POST['mushroomsId'] . '&message=La photo est enregistrée');
+    }
 } catch (PDOException) {
-    echo "erreur lors de la requête";
+    echo 'Erreur lors de la requête';
+    //Utils::redirect('mushrooms-details.php?message=Erreur lors de la requête');
+    exit;
+} catch (Exception) {
+    echo 'Erreur ajout dossier';
+    //Utils::redirect("mushroom-details.php?message=L'ajout de la photo au dossier de destination à échoué");
     exit;
 }
 
-if (isset($_FILES['newPicture'])) {
-    // on met le fichier dans une variable pour une meilleure lisibilité
-    $file = $_FILES['newPicture'];
 
-    // On construit le chemin de destination
-    $destination = "assets/uploads/" . $path;
-
-    // On bouge le fichier temporaire dans la destination
-    if (move_uploaded_file($file['tmp_name'], $destination)) {
-        Utils::redirect('mushrooms-details.php?id=' . $_POST['mushroomsId'] . '&message=La photo est enregistrée');
-    }
-}

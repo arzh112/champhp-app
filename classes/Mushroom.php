@@ -50,6 +50,20 @@ class Mushroom implements IgetData, IgetDataById
         return new self($m['id'], $m['name'], $m['latin_name'], $m['genus'], $m['habitat'], $m['category'], $m['description'], $m['main_picture']);
     }
 
+    public static function addToDB(PDO $pdo, string $name, string $latinName, string $genus, string $habitat, string $category, string $description, string $mainPicture): void
+    {
+        $addstmt = $pdo->prepare("INSERT INTO mushrooms (name, latin_name, genus, habitat, category, description, main_picture) VALUES (:name, :latin_name, :genus, :habitat, :category, :description, :main_picture)");
+        $addstmt->execute([
+            'name' => $name,
+            'latin_name' => $latinName,
+            'genus' => $genus,
+            'habitat' => $habitat,
+            'category' => $category,
+            'description' => $description,
+            'main_picture' => $mainPicture
+        ]);
+    }
+
     public function getId(): int
     {
         return $this->id;

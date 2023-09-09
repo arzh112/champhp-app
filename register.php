@@ -1,5 +1,6 @@
 <?php
 require_once 'layout/header.php';
+require_once 'classes/InvalidEmailException.php';
 require_once 'classes/Utils.php';
 
 if (isset($_GET['error'])) {
@@ -25,20 +26,23 @@ if (!empty($_POST)) {
 
     try {
         $pdo = getDbConnection();
-        
+        Client::addToDB($pdo, $email, $username, $password);
+
     } catch(PDOException) {
         echo "erreur lors de la requête";
         exit;
+    } catch(InvalidEmailException $ex) {
+        $message = $ex->getMessage();
     }
 }
 ?>
 
-<div class="container">
+<div class="container d-flex flex-column align-items-center">
     <h1>Créer un compte</h1>
     <div class="text-danger">
         <?php if (isset($message)) { echo $message; } ?>
     </div>
-    <form method="POST">
+    <form method="POST" class="w-50">
         <div class="form-group my-2">
             <label for="email">E-mail :</label>
             <input type="text" class="form-control" name="email" />
