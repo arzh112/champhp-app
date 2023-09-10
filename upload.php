@@ -1,4 +1,5 @@
 <?php
+// N'est plus utilisée, l'upload se fait directement sur la page mushrooms-details.php 
 session_start();
 require_once 'classes/Utils.php';
 require_once 'classes/ErrorCode.php';

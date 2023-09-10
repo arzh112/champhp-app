@@ -24,6 +24,7 @@ function getDbConnection(): PDO
     return $pdo;
 }
 
+// Ces fonctions ne sont plus utilisées, changées en méthode de classe.
 // /**
 //  * Return an array of object with all users in data base
 //  *

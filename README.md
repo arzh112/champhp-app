@@ -135,7 +135,7 @@ Depuis la page mushrooms-details.php les utilisateurs connectés peuvent envoyer
 La factorisation en fonction ou en méthode de la fonctionnalité d'upload pourrait être intéressante car elle est utilisée à plusieurs endroits: la page mushrooms-details.php et la page admin-mushroom.php.
 
 ## Exception
-Ajouter plus d'exceptions personnalisées.
+Ajouter plus d'exceptions personnalisées (une seule pour le moment: InvalidEmailException).
 
 ## Modification
 Ajouter une fonctionnalité permettant la modification par un administrateur des données de la table mushrooms.
