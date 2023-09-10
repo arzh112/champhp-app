@@ -1,6 +1,6 @@
 # Application
 
-J'ai voulue réaliser une application de banque d'image de champignon qui permette à des utilisateurs
+J'ai voulu réaliser une application de banque d'image de champignon qui permette à des utilisateurs
 connectés de télécharger sur l'application des photos de champignon.
 Chaque photo est liée à un champignon spécifique présenté sur l'application.
 ## Fonctionnalités
@@ -82,7 +82,7 @@ DB_USER="user"
 DB_PASSWORD="password"
 ```
 
-Il y a deux utilisateurs déjà crés:
+Il y a deux utilisateurs déjà créés:
 Utilisateur admin: admin, email: admin@admin.com, password: admin.
 Utilisateur non admin: user, email: user@user.com, password: user.
 
@@ -90,7 +90,7 @@ Utilisateur non admin: user, email: user@user.com, password: user.
 
 ## Les classes
 
-J'ai définis cinq classes qui reprennent en propriétés les colonnes de la base de donnée:
+J'ai défini cinq classes qui reprennent en propriétés les colonnes de la base de donnée:
 * les classes Admin et Client sont des classes enfants de la classe abstraite User, 
 * la classe Mushroom 
 * la classe Picture
@@ -123,7 +123,7 @@ $users = [...$admins, ...$clients];
 
 ## Register : register.php
 
-J'ai utilisé la méthode statique addToDB() de la classe Client. Le plus gros problème rencontré venait de la colonne password de la table users de la base de donnée que j'avais typé en VARCHAR 45 ce qui était trop peu pour des mot de passe hasher et qui renvoyait donc false lorsque j'utilisais la fonction password_verify() sur la page auth.php.
+J'ai utilisé la méthode statique addToDB() de la classe Client. Le plus gros problème rencontré venait de la colonne password de la table users de la base de donnée que j'avais typé en VARCHAR 45 ce qui était trop peu pour des mots de passe hasher et qui renvoyait donc false lorsque j'utilisais la fonction password_verify() sur la page auth.php.
 
 ## Upload d'image
 
@@ -138,7 +138,7 @@ La factorisation en fonction ou en méthode de la fonctionnalité d'upload pourr
 Ajouter plus d'exceptions personnalisées (une seule pour le moment: InvalidEmailException).
 
 ## Modification
-Ajouter une fonctionnalité permettant la modification par un administrateur des données de la table mushrooms.
+Ajouter une fonctionnalité permettant la modification par un admin des données de la table mushrooms.
 Ajouter une fonctionnalité de gestion des utilisateurs par un admin.
 
 # Avis sur le projet
