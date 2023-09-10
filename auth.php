@@ -31,9 +31,9 @@ if (filter_var($login, FILTER_VALIDATE_EMAIL) === false) {
 
 
 foreach($clients as $client) {
-    var_dump($password);
-    var_dump($client->getPassword());
-    var_dump(password_verify($password, $client->getPassword()));
+    // var_dump($password);
+    // var_dump($client->getPassword());
+    // var_dump(password_verify($password, $client->getPassword()));
     if ($login === $client->getEmail() && password_verify($password, $client->getPassword())) {
         session_start();
         $_SESSION['id'] = $client->getId();

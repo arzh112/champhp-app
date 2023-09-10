@@ -12,20 +12,19 @@ if (isset($_GET['error'])) {
     $message = ErrorCode::getErrorMessage(intval($_GET['error']));
 }
 
-if($_GET['message'] ?? null) {
+if ($_GET['message'] ?? null) {
     $message = $_GET['message'];
 }
-
 
 try {
     $pdo = getDbConnection();
     $mushrooms = Mushroom::getData($pdo);
-    foreach ($_POST as $post) {
-        if (empty($post)) {
+    if (!empty($_POST)) {
+
+        if (empty($_POST['name']) || empty($_POST['latin_name']) || empty($_POST['genus']) || empty($_POST['habitat']) || empty($_POST['category']) || empty($_POST['description'])) {
             throw new Exception(ErrorCode::getErrorMessage(ErrorCode::FIELDS_REQUIRED));
         }
-    }
-    if (isset($_POST) && isset($_FILES['mainPicture'])) {
+
         [
             'name' => $name,
             'latin_name' => $latinName,
@@ -33,25 +32,44 @@ try {
             'habitat' => $habitat,
             'category' => $category,
             'description' => $description,
-            'mainPicture' => $mainPicture
         ] = $_POST;
+    }
 
-        [
-            'name' => $title,
-        ] = $_FILES['mainPicture'];
+    if (isset($_FILES['mainPicture'])) {
 
-        Mushroom::addToDB($pdo, $name, $latinName, $genus, $habitat, $category, $description, $title);
-        
-        if (isset($_FILES['mainPicture'])) {
+        if ($_FILES['mainPicture']['error'] === UPLOAD_ERR_NO_FILE) {
+            throw new Exception(ErrorCode::getErrorMessage(ErrorCode::FIELDS_REQUIRED));
+        }
+
+        if ($_FILES['mainPicture']['error'] === UPLOAD_ERR_INI_SIZE) {
+            throw new Exception("La taille de la photo est trop élevée");
+        }
+
+        if ($_FILES['mainPicture']['type'] != 'image/jpeg') {
+            throw new Exception("Veuillez sélectionner une photo au format JPG uniquement");
+        }
+
+        if ($_FILES['mainPicture']['error'] === UPLOAD_ERR_OK) {
+
+            [
+                'name' => $title,
+                'full_path' => $path,
+                'type' => $type,
+                'tmp_name' => $tmpName,
+                'error' => $error,
+                'size' => $size
+            ] = $_FILES['mainPicture'];
+
+            Mushroom::addToDB($pdo, $name, $latinName, $genus, $habitat, $category, $description, $title);
+
             $file = $_FILES['mainPicture'];
             $destination = "assets/pictures/" . $path;
-            if (move_uploaded_file($file['tmp_name'], $destination)) {
-                Utils::redirect('admin-mushroom.php?message=Le champignon a été ajouté avec succès');
+            if (move_uploaded_file($file['tmp_name'], $destination) === false) {
+                throw new Exception("L'ajout de la photo au dossier de destination à échoué");
             }
-            throw new Exception("L'ajout de la photo au dossier de destination à échoué");
+            $message = "Le champignon à été ajouté avec succès";
         }
     }
-        
 } catch (PDOException) {
     $message = "Erreur lors de la requête";
 } catch (Exception $ex) {
@@ -68,7 +86,7 @@ try {
     </div>
     <form method="POST" class="w-50" enctype="multipart/form-data">
         <div class="form-group my-2">
-            <label for="mainPicture">Photo principale :</label>
+            <label for="mainPicture">Photo principale (au format jpg uniquement) :</label>
             <input type="file" class="form-control" name="mainPicture" />
         </div>
         <div class="form-group my-2">
