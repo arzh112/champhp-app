@@ -82,7 +82,7 @@ DB_USER="user"
 DB_PASSWORD="password"
 ```
 
-Il y a deux utilisateurs déjà créer:
+Il y a deux utilisateurs déjà crés:
 Utilisateur admin: admin, email: admin@admin.com, password: admin.
 Utilisateur non admin: user, email: user@user.com, password: user.
 
@@ -90,7 +90,7 @@ Utilisateur non admin: user, email: user@user.com, password: user.
 
 ## Les classes
 
-J'ai définis cinq classes qui reprennent en propriété les colonnes de la base de donnée:
+J'ai définis cinq classes qui reprennent en propriétés les colonnes de la base de donnée:
 * les classes Admin et Client sont des classes enfants de la classe abstraite User, 
 * la classe Mushroom 
 * la classe Picture
@@ -123,11 +123,11 @@ $users = [...$admins, ...$clients];
 
 ## Register : register.php
 
-J'ai utilisé la méthode statique addToDB de la classe Client. Le plus gros problème rencontré venait de la colonne password de la table users de la base de donnée que j'avais typé en VARCHAR 45 ce qui était trop peu pour des mot de passe hasher et qui renvoyait donc false lorsque j'utilisais la fonction password_verify() sur la page auth.php.
+J'ai utilisé la méthode statique addToDB() de la classe Client. Le plus gros problème rencontré venait de la colonne password de la table users de la base de donnée que j'avais typé en VARCHAR 45 ce qui était trop peu pour des mot de passe hasher et qui renvoyait donc false lorsque j'utilisais la fonction password_verify() sur la page auth.php.
 
 ## Upload d'image
 
-Depuis la page mushrooms-details.php les utilisateurs connectés peuvent envoyer des photos d'un champignon. Au départ le formulaire redirigeait vers une page upload.php qui éffectuait l'ajout à la base de donnée et au dossier upload dans les assets. La page upload redirigeait avec des messages d'erreur en cas d'échec. J'ai ensuite préférer gérer l'upload directement sur la page mushrooms-details.php et gérer les cas d'erreurs avec des exceptions.
+Depuis la page mushrooms-details.php les utilisateurs connectés peuvent envoyer des photos d'un champignon. Au départ le formulaire redirigeait vers une page upload.php qui éffectuait l'ajout à la base de donnée et au dossier upload dans les assets. La page upload redirigeait avec des messages d'erreur en cas d'échec ou un messages de succès. J'ai ensuite préférer gérer l'upload directement sur la page mushrooms-details.php et gérer les cas d'erreurs avec des exceptions.
 
 # Pistes d'amélioration
 
@@ -142,7 +142,7 @@ Ajouter une fonctionnalité permettant la modification par un administrateur des
 Ajouter une fonctionnalité de gestion des utilisateurs par un admin.
 
 # Avis sur le projet
-La possibilité de réaliser un projet concret permet de se confronté à toutes les problématiques d'organisation des fichiers, d'implémentation des fonctionnalités et de factorisation.
+La possibilité de réaliser un projet concret permet d'être confronté à toutes les problématiques d'organisation des fichiers, d'implémentation des fonctionnalités et de factorisation.
 Ce projet à été vraiment formateur et j'ai vraiment beaucoup apprécié le réaliser.
 
 
